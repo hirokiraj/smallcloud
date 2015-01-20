@@ -1,0 +1,14 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: your_username
+  password: your_password
+
+development:
+  <<: *default
+  database: smallcloud-development
+
+test:
+  <<: *default
+  database: smallcloud-test
