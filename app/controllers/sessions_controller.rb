@@ -27,7 +27,6 @@ class SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
-    puts current_user
     respond_to do |format|
       format.json {
         if current_user

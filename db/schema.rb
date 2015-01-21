@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150120192523) do
+ActiveRecord::Schema.define(version: 20150121224631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "directories", force: :cascade do |t|
+    t.string  "name"
+    t.integer "parent_id"
+    t.integer "user_id"
+  end
+
+  add_index "directories", ["parent_id"], name: "index_directories_on_parent_id", using: :btree
+  add_index "directories", ["user_id"], name: "index_directories_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
