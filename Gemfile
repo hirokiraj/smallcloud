@@ -17,9 +17,9 @@ end
 group :development, :test do
   gem 'pry'
   gem 'thin'
+  gem 'html2haml'
 end
 
 gem 'devise'
 gem 'simple_token_authentication'
-
-
+gem 'haml'

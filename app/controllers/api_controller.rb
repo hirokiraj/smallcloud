@@ -1,6 +1,7 @@
-class ApplicationController < ActionController::Base
+class ApiController < ActionController::Base
   protect_from_forgery with: :null_session
   before_action :add_headers
+  acts_as_token_authentication_handler_for User
 
   def add_headers
     headers['Access-Control-Allow-Origin'] = '*'
