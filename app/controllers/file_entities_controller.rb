@@ -11,7 +11,12 @@ class FileEntitiesController < ApiController
   def create
     @file_entity = FileEntity.new(file_entity_params)
     if @file_entity.save
-      render json: @file_entity, status: :created, location: @file_entity
+      if user.quota_above_limit?
+        @file_entity.destroy
+        render json: 'You do not have enough space to upload this file', status: :precondition_failed
+      else
+        render json: @file_entity, status: :created, location: @file_entity
+      end
     else
       render json: @file_entity.errors.full_messages, status: :unprocesable_entity
     end
