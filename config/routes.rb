@@ -13,5 +13,8 @@ Rails.application.routes.draw do
 
   get '/search/:search_term', to: 'search#search', as: :search
 
-  get '/quota', to: 'quota/quota', as: :quota
+  get '/quota', to: 'quota#quota', as: :quota
+
+  resources :sharings, only: [:index, :show, :create, :destroy], defaults: { format: 'json' }
+  get '/sharings/shared', to: 'sharings#shared', as: :shared
 end

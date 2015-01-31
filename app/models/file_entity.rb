@@ -1,6 +1,7 @@
 class FileEntity < ActiveRecord::Base
   belongs_to :directory
   belongs_to :user, through: :directory
+  has_many :sharings
   has_attached_file :attachment
 
   validates_with AttachmentSizeValidator, :attributes => :attachment, :less_than => 5.megabytes
