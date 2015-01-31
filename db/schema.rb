@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150121224631) do
+ActiveRecord::Schema.define(version: 20150131200024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,18 @@ ActiveRecord::Schema.define(version: 20150121224631) do
 
   add_index "directories", ["parent_id"], name: "index_directories_on_parent_id", using: :btree
   add_index "directories", ["user_id"], name: "index_directories_on_user_id", using: :btree
+
+  create_table "file_entities", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "directory_id"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+  end
+
+  add_index "file_entities", ["directory_id"], name: "index_file_entities_on_directory_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -39,6 +51,7 @@ ActiveRecord::Schema.define(version: 20150121224631) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "authentication_token"
+    t.integer  "quota"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree

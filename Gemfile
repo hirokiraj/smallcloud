@@ -26,3 +26,4 @@ gem 'devise'
 gem 'simple_token_authentication'
 gem 'haml'
 gem 'acts_as_tree'
+gem "paperclip", "~> 4.2"

@@ -26,7 +26,7 @@ class DirectoriesController < ApiController
 
   def parent
     @parent = @directory.parent
-    render json: @parent
+    render json: @parent, location: @parent
   end
 
   def children
