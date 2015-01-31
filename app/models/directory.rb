@@ -1,5 +1,6 @@
 class Directory < ActiveRecord::Base
   belongs_to :user
+  has_many :file_entities
   acts_as_tree order: 'name'
 
   validates :user_id, :name, presence: true

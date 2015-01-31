@@ -4,4 +4,5 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :validatable
 
   has_many :directories
+  has_many :file_entities, through: :directories
 end
