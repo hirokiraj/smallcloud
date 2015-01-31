@@ -9,5 +9,10 @@ FactoryGirl.define do
         create(:directory, user: user)
       end
     end
+    factory :user_with_directory_and_file do
+      after(:create) do |user|
+        create(:directory_with_file, user: user)
+      end
+    end
   end
 end

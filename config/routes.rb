@@ -13,5 +13,5 @@ Rails.application.routes.draw do
 
   get '/search/:search_term', to: 'search#search', as: :search
 
-  get '/quota', to: 'quota/quota', as: :quota
+  get '/quota', to: 'quota#quota', as: :quota
 end

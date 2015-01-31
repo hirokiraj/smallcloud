@@ -1,14 +1,14 @@
 class FileEntity < ActiveRecord::Base
   belongs_to :directory
-  belongs_to :user, through: :directory
+  belongs_to :user#, through: :directory
   has_attached_file :attachment
 
   validates_with AttachmentSizeValidator, :attributes => :attachment, :less_than => 5.megabytes
   validates :attachment, :attachment_presence => true
   validates :directory_id, presence: true
 
-  after_create :take_quota
-  before_destroy :free_quota
+  #after_create :take_quota
+  #before_destroy :free_quota
 
   def as_json(options={})
     {

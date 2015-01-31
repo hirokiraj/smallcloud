@@ -5,7 +5,7 @@ class FileEntitiesController < ApiController
   end
 
   def show
-    render josn: @file_entity
+    render json: @file_entity
   end
 
   def create
