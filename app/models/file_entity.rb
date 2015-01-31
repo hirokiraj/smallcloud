@@ -26,11 +26,11 @@ class FileEntity < ActiveRecord::Base
 
   def take_quota
     user.quota += attachment_file_size
-    user.save!
+    user.save
   end
 
   def free_quota
     user.quota -= attachment_file_size
-    user.save!
+    user.save
   end
 end
