@@ -10,4 +10,6 @@ Rails.application.routes.draw do
 
   resources :file_entities, only: [:index, :show, :create, :destroy], defaults: { format: 'json' }
   get '/file_entities/parent/:id', to: 'file_entities#parent', as: :file_entity_parent
+
+  get '/search/:search_term', to: 'search#search', as: :search
 end
