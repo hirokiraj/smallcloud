@@ -18,6 +18,8 @@ group :development, :test do
   gem 'pry'
   gem 'thin'
   gem 'html2haml'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
 
 gem 'devise'
