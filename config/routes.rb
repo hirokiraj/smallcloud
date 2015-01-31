@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   get '/file_entities/parent/:id', to: 'file_entities#parent', as: :file_entity_parent
 
   get '/search/:search_term', to: 'search#search', as: :search
+
+  get '/quota', to: 'quota/quota', as: :quota
 end
