@@ -15,7 +15,7 @@ describe FileEntitiesController do
   end
 
   it ' user can see entity' do
-    get :show, {id: @user.directories.first.file_entities.first}, { "Accept" => "application/json" }
+    get :show, {id: @user.file_entities.first.id}, { "Accept" => "application/json" }
     expect(response.status).to eq(200)
     json = JSON.parse(response.body)
     expect(json["attachment_file_name"]).to eq "example_file"
