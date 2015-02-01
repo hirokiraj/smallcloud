@@ -4,7 +4,7 @@ require "rails_helper"
 describe SessionsController do
 
   before do
-    user = FactoryGirl.create :user
+    @user = FactoryGirl.create :user
     @request.env['devise.mapping'] = Devise.mappings[:user]
   end
 
@@ -13,7 +13,8 @@ describe SessionsController do
     it 'properly authenticates user' do
       post :create, { user: {login: 'email@example.com', password: 'password'}}, { 'Accept' => 'application/json' , 'Content-Type' => 'application/json' }
       expect(response.status).to eq(200)
-      json = JSON.parse(response.body)
+      assigns(:user).should be(@user)
+      #json = JSON.parse(response.body)
       # expect(resp['success']).to  eq(true)
       # expect(resp['info']).to  eq('Logged in')
       # expect(resp['data']['email']).to  eq('email@example.com')
