@@ -14,6 +14,7 @@ describe RegistrationsController do
       expect(response.status).to eq(201)
       json = JSON.parse(response.body)
       expect(json['state']['code']).to eq(0)
+      expect(User.all.count).to eq 1
     end
   end
 end

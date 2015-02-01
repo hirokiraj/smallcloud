@@ -4,10 +4,9 @@ describe FileEntitiesController do
 
   before(:each) do
     @request.env["devise.mapping"] = Devise.mappings[:user]
-    user = FactoryGirl.create(:user_with_directory_and_file)
-    @directory = user.directories.first
-    sign_in user
-    @user = User.last
+    @user = FactoryGirl.create(:user_with_directory_and_file)
+    @directory = @user.directories.first
+    sign_in @user
   end
 
   it "should get index" do

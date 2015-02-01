@@ -20,6 +20,7 @@ group :development, :test do
   gem 'html2haml'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'shoulda-matchers', require: false
 end
 
 gem 'devise'

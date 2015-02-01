@@ -15,12 +15,12 @@ describe SearchController do
 
   it "should return info with no file" do
     get :search, {search_term: 'no_file'}, { "Accept" => "application/json" }
-    expect(response.status).to eq(200)
+    expect(response.status).to eq(:no_content)
   end
 
   it "should return info about no search term" do
-    get :search, {}, { "Accept" => "application/json" }
-    expect(response.status).to eq(200)
+    get :search, {search_term: ''}, { "Accept" => "application/json" }
+    expect(response.status).to eq(:bad_request)
   end
 
 end
