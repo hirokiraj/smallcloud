@@ -8,6 +8,7 @@ RSpec.describe Directory, :type => :model do
 
   it "Relations" do
     should belong_to(:user)
+    should have_many(:file_entities)
   end
 
   it "Should validate if user exists" do

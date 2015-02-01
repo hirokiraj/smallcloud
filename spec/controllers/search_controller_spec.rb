@@ -5,32 +5,32 @@ describe SearchController do
   describe 'Unauthorized user' do
 
     it "unauthorized user cant search files" do
-      get :search, {search_term: 'example_file'}, { "Accept" => "application/json" }
+      get :search, {search_term: 'example_file'}
       expect(response.status).to eq(401)
     end
   end
 
   describe 'User search' do
-
     before(:each) do
       @request.env["devise.mapping"] = Devise.mappings[:user]
-      @user = FactoryGirl.create(:user_with_directory_and_file)
+      @user = User.create email: 'test@test.com', password: 'test123123', password_confirmation: 'test123123'
       sign_in @user
+      @directory = Directory.create user_id: @user.id, name: 'testdirectory'
+      @file = FileEntity.create directory_id: @directory.id, attachment: File.new(Rails.root + 'spec/fixtures/images/test.png')
     end
 
     it "should return file on search" do
-      get :search, {search_term: 'example_file'}, { "Accept" => "application/json", 'Content-Type' => 'application/json'  }
-      controller.params[:search_term].should eql 'example_file'
+      get :search, search_term: 'test'
       expect(response.status).to eq(200)
     end
 
     it "should return info with no file" do
-      get :search, {search_term: 'no_file'}, { "Accept" => "application/json" }
+      get :search, search_term: 'no_file'
       expect(response.status).to eq(204)
     end
 
     it "should return info about no search term" do
-      get :search, {search_term: nil}, { "Accept" => "application/json" }
+      get :search, search_term: ''
       expect(response.status).to eq(400)
     end
   end

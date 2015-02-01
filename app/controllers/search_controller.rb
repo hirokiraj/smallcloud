@@ -1,9 +1,12 @@
 class SearchController < ApiController
   def search
-    if params[:search_term]
-      @files = current_user.file_entities.where('attachment_file_name ilike ?', "#{params[search_term]}")
-      render json: 'No files were found', status: :no_content if @files.empty?
-      render json: @files
+    unless params[:search_term].blank?
+      @files = current_user.file_entities.where('attachment_file_name ilike ?', "%#{params[:search_term]}%")
+      if @files.empty?
+        render json: 'No files were found', status: :no_content
+      else
+        render json: @files
+      end
     else
       render json: 'You must provide a search term', status: :bad_request
     end

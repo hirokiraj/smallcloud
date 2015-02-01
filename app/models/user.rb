@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :file_entities, through: :directories
   has_many :sharings
 
-  before_create :set_quota_to_0
+  after_create :set_quota_to_0
 
   def quota_above_limit?
     quota > Rails.application.secrets.max_quota
@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
   private
 
   def set_quota_to_0
-    quota = 0
+    self.quota = 0
+    self.save
   end
 end
