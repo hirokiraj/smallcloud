@@ -1,6 +1,5 @@
 require "rails_helper"
 
-# Use methods from api helper !
 describe RegistrationsController do
 
   before do
