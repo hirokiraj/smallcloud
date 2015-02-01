@@ -35,4 +35,15 @@ describe FileEntitiesController do
     expect(FileEntity.all.count).to eq 0
   end
 
+  it 'should not accept files above quota' do
+    6.times do
+      sign_in @user
+      post :create, {file_entity:{directory_id: @directory.id, attachment: Rack::Test::UploadedFile.new(Rails.root + 'spec/fixtures/images/test.png', 'image/png')}}, { "Accept" => "application/json", "Content-Type" => "application/json"}
+    end
+    sign_in @user
+    post :create, {file_entity:{directory_id: @directory.id, attachment: Rack::Test::UploadedFile.new(Rails.root + 'spec/fixtures/images/test.png', 'image/png')}}, { "Accept" => "application/json", "Content-Type" => "application/json"}
+    expect(response.status).to eq(412)
+    expect(response.body).to eq('You do not have enough space to upload this file')
+
+  end
 end

@@ -9,8 +9,7 @@ class FileEntity < ActiveRecord::Base
   validates :directory_id, presence: true
   do_not_validate_attachment_file_type :attachment
 
-  #after_create :take_quota
-  #before_destroy :free_quota
+  after_create :take_quota
 
   # def as_json(options={})
   #   {
@@ -27,15 +26,13 @@ class FileEntity < ActiveRecord::Base
     return self.attachment.url
   end
 
+  def free_quota
+    self.directory.user.free_quota attachment_file_size
+  end
+
   private
 
   def take_quota
-    user.quota += attachment_file_size
-    user.save
-  end
-
-  def free_quota
-    user.quota -= attachment_file_size
-    user.save
+    self.directory.user.take_quota attachment_file_size
   end
 end

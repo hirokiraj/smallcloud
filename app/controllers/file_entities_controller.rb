@@ -25,6 +25,7 @@ class FileEntitiesController < ApiController
   end
 
   def destroy
+    @file_entity.free_quota
     @file_entity.destroy
     head :no_content
   end

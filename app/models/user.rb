@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   after_create :set_quota_to_0
 
   def quota_above_limit?
-    quota > Rails.application.secrets.max_quota
+    self.reload.quota > Rails.application.secrets.max_quota
   end
 
   def shared_files
@@ -19,6 +19,16 @@ class User < ActiveRecord::Base
       shared << f unless f.sharings.empty?
     end
     shared
+  end
+
+  def take_quota(qsize)
+    self.quota += qsize
+    self.save
+  end
+
+  def free_quota(qsize)
+    self.quota -= qsize
+    self.save
   end
 
   private
