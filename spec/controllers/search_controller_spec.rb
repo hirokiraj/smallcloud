@@ -4,23 +4,25 @@ describe SearchController do
 
   before(:each) do
     @request.env["devise.mapping"] = Devise.mappings[:user]
-    @user = FactoryGirl.create(:user_with_directory_and_file)
+    @user = User.create email: 'test@test.com', password: 'test123123', password_confirmation: 'test123123'
     sign_in @user
+    @directory = Directory.create user_id: @user.id, name: 'testdirectory'
+    @file = FileEntity.create directory_id: @directory.id, attachment: File.new(Rails.root + 'spec/fixtures/images/test.png')
   end
 
   it "should return file on search" do
-    get :search, {search_term: 'example_file'}, { "Accept" => "application/json" }
+    get :search, search_term: 'test'
     expect(response.status).to eq(200)
   end
 
   it "should return info with no file" do
-    get :search, {search_term: 'no_file'}, { "Accept" => "application/json" }
-    expect(response.status).to eq(:no_content)
+    get :search, search_term: 'no_file'
+    expect(response.status).to eq(204)
   end
 
   it "should return info about no search term" do
-    get :search, {search_term: ''}, { "Accept" => "application/json" }
-    expect(response.status).to eq(:bad_request)
+    get :search, search_term: ''
+    expect(response.status).to eq(400)
   end
 
 end

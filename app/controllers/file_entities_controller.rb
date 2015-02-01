@@ -1,4 +1,6 @@
 class FileEntitiesController < ApiController
+  before_action :set_file_entity, only: [:show, :destroy, :parent]
+
   def index
     @file_entities = current_user.file_entities
     render json: @file_entities
@@ -11,7 +13,7 @@ class FileEntitiesController < ApiController
   def create
     @file_entity = FileEntity.new(file_entity_params)
     if @file_entity.save
-      if user.quota_above_limit?
+      if current_user.quota_above_limit?
         @file_entity.destroy
         render json: 'You do not have enough space to upload this file', status: :precondition_failed
       else
@@ -23,7 +25,7 @@ class FileEntitiesController < ApiController
   end
 
   def destroy
-    @directory.destroy
+    @file_entity.destroy
     head :no_content
   end
 
@@ -36,7 +38,7 @@ class FileEntitiesController < ApiController
 
   def set_file_entity
     @file_entity = FileEntity.find_by_id(params[:id])
-    unless @file_entity || @file_entity.try(:directory).try(:user) == current_user
+    if @file_entity.nil? || @file_entity.try(:directory).try(:user) != current_user
       render json: 'File entity with such id does not exist, or is not yours', status: :bad_request
     end
   end
