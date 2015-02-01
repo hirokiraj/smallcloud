@@ -19,7 +19,7 @@ describe SearchController do
     end
 
     it "should return file on search" do
-      get :search, {search_term: 'example_file'}, { "Accept" => "application/json" }
+      get :search, {search_term: 'example_file'}, { "Accept" => "application/json", 'Content-Type' => 'application/json'  }
       controller.params[:search_term].should eql 'example_file'
       expect(response.status).to eq(200)
     end
