@@ -44,5 +44,23 @@ describe DirectoriesController do
       expect(response.status).to eq(204)
       expect(Directory.all.count).to eq 0
     end
+
+    it 'should properly show parent directory' do
+      @directory = @user.directories.first
+      @dir2 = Directory.create user_id: @user.id, parent_id: @directory.id, name: 'testdir2'
+      get :parent, id: @dir2.id
+      expect(response.status).to eq(200)
+      json = JSON.parse(response.body)
+      expect(json['name']).to eq('example')
+    end
+
+    it 'should properly show child directories' do
+      @directory = @user.directories.first
+      @dir2 = Directory.create user_id: @user.id, parent_id: @directory.id, name: 'testdir2'
+      get :children, id: @directory.id
+      expect(response.status).to eq(200)
+      json = JSON.parse(response.body)
+      expect(json[0]['name']).to eq('testdir2')
+    end
   end
 end

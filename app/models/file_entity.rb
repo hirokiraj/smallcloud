@@ -23,6 +23,10 @@ class FileEntity < ActiveRecord::Base
   #   }
   # end
 
+  def attachment_url
+    return self.attachment.url
+  end
+
   private
 
   def take_quota

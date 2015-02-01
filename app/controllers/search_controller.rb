@@ -11,9 +11,4 @@ class SearchController < ApiController
       render json: 'You must provide a search term', status: :bad_request
     end
   end
-
-  private
-  def foo_params
-    params.require(:search).permit(:search_term)
-  end
 end

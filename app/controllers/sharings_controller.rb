@@ -1,13 +1,13 @@
 class SharingsController < ApiController
   before_action :set_sharing, only: [:show, :destroy, :parent, :children]
-  
+
   def index
     @sharings = current_user.sharings
     render json: @sharings
   end
 
   def show
-    render json: @sharing
+    render json: @sharing.as_json(only: [:id, :user_id], include: { file_entity:{only: [], methods: [:attachment_url]}})
   end
 
   def create
@@ -32,13 +32,13 @@ class SharingsController < ApiController
   private
 
   def set_sharing
-    @directory = Sharing.find_by_id(params[:id])
+    @sharing = Sharing.find_by_id(params[:id])
     unless @sharing || @sharing.try(:user) == current_user || @sharing.try(:file_entity).try(:user) == current_user
       render json: 'Sharing with such id does not exist, or is not yours', status: :bad_request
     end
   end
 
-  def sharing
+  def sharing_params
     params.require(:sharing).permit(:file_entity_id, :user_id)
   end
 end
