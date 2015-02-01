@@ -36,7 +36,7 @@ class FileEntitiesController < ApiController
 
   def set_file_entity
     @file_entity = FileEntity.find_by_id(params[:id])
-    unless @directory || @directory.try(:user) == current_user
+    unless @file_entity || @file_entity.try(:directory).try(:user) == current_user
       render json: 'File entity with such id does not exist, or is not yours', status: :bad_request
     end
   end
